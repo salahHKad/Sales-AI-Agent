@@ -11,21 +11,23 @@
  * Learn more at https://developers.cloudflare.com/workers/
  */
 
-// export default {
-// 	async fetch(request, env, ctx): Promise<Response> {
-// 		return new Response("Hello , World!");
-// 	},
-// } satisfies ExportedHandler<Env>;
+import { systemPrompt } from "./sales-agent/prompt";
+
 
 export interface Env {
 	AI: Ai;
 }
 
+const testTranscript = `Customer: Hey I am looking into buying a Lenovo laptop, my budget is 500$ and bellow, can you recommend one to me?`;
+
 export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     try {
       const response = await env.AI.run("@cf/meta/llama-3.1-8b-instruct-fp8", {
-        prompt: "Tell me a joke"
+		messages: [
+			{ role: "system", content: systemPrompt },
+			{ role: "user", content: testTranscript }
+		]
       });
       return Response.json(response);
     } catch (error) {
