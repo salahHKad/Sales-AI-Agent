@@ -18,8 +18,8 @@ export interface Env {
 	AI: Ai;
 }
 
-const testTranscript = `Customer: Hey I am looking into buying a Lenovo laptop, my budget is 500$ and bellow, can you recommend one to me?`;
-
+//const testTranscript = `Customer: Hey I am looking into buying a Lenovo laptop, my budget is 500$ and bellow, can you recommend one to me?`;
+  const testTranscript = 'can you give me python code to print hello world?';
 export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     try {
