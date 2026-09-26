@@ -18,8 +18,8 @@ const exampleOutput = `{
   "missing_info": ["الموديل", "الاستخدام المطلوب"],
   "contradictions": null,
   "suggested_next_step": {
-    "question": "هل تفضل هاتف بشاشة كبيرة أم متوسطة الحجم؟",
-    "reasoning": "معرفة حجم الشاشة المفضل يساعد في تضييق الخيارات ضمن الميزانية"
+    "question": "ما هو الاستخدام الرئيسي المطلوب للهاتف؟",
+    "reasoning": "معرفة الاستخدام المطلوب يساعد في تحديد الموديل المناسب ضمن الميزانية"
   }
 }`;
 
@@ -31,6 +31,8 @@ Rules:
 - For every extracted fact, include a verbatim quote from the transcript as evidence, in the original language it was said in (do not translate evidence).
 - If a field is not mentioned, label it 'غير مذكور'.
 - Never invent information the customer didn't say.
+- The suggested_next_step.question MUST ask about one of the items listed in missing_info. Do not introduce a new topic, product category, or distinction that is not already listed in missing_info.
+- Only reference real, standard product categories and specs. Never invent a product type, feature, or distinction that does not genuinely exist (e.g. do not invent a "smart" vs "regular" version of a product category unless the customer themselves used that distinction).
 - Keep customer-stated facts and your own suggested next steps clearly separate.
 - ALL generated content (summary, extracted_facts values, missing_info, suggested_next_step) MUST be written entirely in Arabic. Never mix in English words or field values, even for brand names or technical terms — transliterate them into Arabic (e.g. "Samsung" becomes "سامسونج", "Lenovo" becomes "لينوفو").
 
