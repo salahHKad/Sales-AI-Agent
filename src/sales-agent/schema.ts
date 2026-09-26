@@ -1,16 +1,17 @@
+
 export const outputSchema = {
-  summary: "string — one sentence summary of the customer's request",
+  summary: "string (بالعربية) — ملخص من جملة واحدة لطلب العميل",
   extracted_facts: {
     "<fact_name>": {
-      value: "string — the extracted value",
-      evidence: "string — verbatim quote from transcript"
+      value: "string (بالعربية) — القيمة المستخرجة",
+      evidence: "string — اقتباس حرفي من المحادثة (بنفس لغة العميل، بدون ترجمة)"
     }
   },
-  missing_info: ["array of strings — fields not mentioned"],
-  contradictions: "string | null",
+  missing_info: ["array of strings (بالعربية) — الحقول غير المذكورة"],
+  contradictions: "string (بالعربية) | null",
   suggested_next_step: {
-    question: "string",
-    reasoning: "string"
+    question: "string (بالعربية) — السؤال المقترح للعميل",
+    reasoning: "string (بالعربية) — سبب اقتراح هذا السؤال"
   }
 };
 

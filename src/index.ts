@@ -12,7 +12,7 @@
  */
 
 import { systemPrompt } from "./sales-agent/prompt";
-
+import { formatOutput } from "./sales-agent/formatOutPut";
 
 export interface Env {
 	AI: Ai;
@@ -24,12 +24,34 @@ export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     try {
       const response = await env.AI.run("@cf/meta/llama-3.1-8b-instruct-fp8", {
-		messages: [
-			{ role: "system", content: systemPrompt },
-			{ role: "user", content: testTranscript }
-		]
+  messages: [
+    { role: "system", content: systemPrompt },
+    { role: "user", content: testTranscript }
+  	],
+  	temperature: 0,
+	});
+
+	if (!("response" in response) || typeof response.response !== "string") {
+	return Response.json(
+		{ error: "Model did not return a text response", raw: response },
+		{ status: 500 }
+	);
+	}
+
+	let parsed;
+	try {
+	parsed = JSON.parse(response.response);
+	} catch (e) {
+	return Response.json(
+		{ error: "Model did not return valid JSON", raw: response.response },
+		{ status: 500 }
+	);
+	}
+
+      return Response.json({
+        raw_json: parsed,
+        human_readable: formatOutput(parsed)
       });
-      return Response.json(response);
     } catch (error) {
       return Response.json({ error: String(error) }, { status: 500 });
     }
